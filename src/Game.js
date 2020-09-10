@@ -12,11 +12,9 @@ class Game extends React.Component {
       stepNumber: 0,
       xIsNext: true,
     };
-    this.handleBoardClick = this.handleBoardClick.bind(this);
-    this.handleInfoClick = this.handleInfoClick.bind(this);
   }
 
-  handleBoardClick(squareIndex) {
+  handleSquareClick = (squareIndex) => {
     const { stepNumber, xIsNext, history } = this.state;
     const truncatedHistory = history.slice(0, stepNumber + 1);
     const current = truncatedHistory[truncatedHistory.length - 1];
@@ -31,12 +29,12 @@ class Game extends React.Component {
       stepNumber: truncatedHistory.length,
       xIsNext: !xIsNext,
     });
-  }
+  };
 
-  handleInfoClick(stepNumber) {
+  handleHistClick = (stepNumber) => {
     const xIsNext = stepNumber % 2 === 0;
     this.setState({ history: [...this.state.history], stepNumber, xIsNext });
-  }
+  };
 
   render() {
     const history = this.state.history;
@@ -48,7 +46,7 @@ class Game extends React.Component {
         <div className="game-board">
           <GameBoard
             squares={current.squares}
-            onSquareClick={this.handleBoardClick}
+            onSquareClick={this.handleSquareClick}
           />
         </div>
         <div className="game-info">
@@ -56,7 +54,7 @@ class Game extends React.Component {
             winner={winner}
             history={history}
             xIsNext={this.state.xIsNext}
-            jumpTo={this.handleInfoClick}
+            jumpTo={this.handleHistClick}
           />
         </div>
       </div>
